@@ -194,7 +194,7 @@ button:disabled {
 .titulo-secao h2,
 .titulo-secao h3 {
     margin: 0;
-    color: #1c3936;
+    color: var(--cor-titulo);
 }
 
 .titulo-secao h2 {
@@ -287,7 +287,7 @@ button:disabled {
 }
 
 .opcao-envio strong {
-    color: #1f403d;
+    color: var(--cor-titulo);
 }
 
 .opcao-envio small {
@@ -473,7 +473,7 @@ button:disabled {
 }
 
 .protocolo-box strong {
-    color: #184e47;
+    color: var(--cor-titulo);
     font-size: clamp(1.05rem, 4vw, 1.55rem);
     letter-spacing: 0.06em;
     overflow-wrap: anywhere;
@@ -516,13 +516,13 @@ button:disabled {
 }
 
 .texto-discreto {
-    color: #6b7d79;
+    color: var(--cor-texto-secundario);
     font-size: 0.82rem;
 }
 
 .cabecalho-relato h3 {
     margin: 4px 0 0;
-    color: #1c413d;
+    color: var(--cor-titulo);
     font-size: 1.15rem;
 }
 
@@ -586,7 +586,7 @@ button:disabled {
 }
 
 .resumo-relato strong {
-    color: #2a4843;
+    color: var(--cor-titulo);
     font-size: 0.88rem;
 }
 
@@ -702,7 +702,7 @@ button:disabled {
 }
 
 .rodape strong {
-    color: #2d504b;
+    color: var(--cor-titulo);
 }
 
 @media (max-width: 720px) {
@@ -762,7 +762,7 @@ button:disabled {
 .texto-acompanhamento-identificado {
     margin: 20px auto 0;
     max-width: 560px;
-    color: #61716f;
+    color: var(--cor-texto-secundario);
     line-height: 1.55;
 }
 
@@ -827,7 +827,7 @@ button:disabled {
 
 .resumo-painel strong {
     margin-top: 4px;
-    color: #1e4944;
+    color: var(--cor-titulo);
     font-size: 2rem;
 }
 
@@ -881,7 +881,7 @@ button:disabled {
     border: 1px solid #cedbd8;
     border-radius: 8px;
     padding: 8px;
-    color: #31504b;
+    color: var(--cor-texto-secundario);
     background: #fff;
 }
 
@@ -1019,7 +1019,7 @@ button:disabled {
 
 .grade-dados span {
     margin-bottom: 5px;
-    color: #7d7055;
+    color: var(--cor-texto-muted);
     font-size: 0.76rem;
 }
 
