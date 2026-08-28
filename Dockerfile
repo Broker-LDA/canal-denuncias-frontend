@@ -10,7 +10,7 @@ COPY frontend/package*.json ./
 RUN npm install
 
 # Copia o restante do código do frontend
-COPY frontend/. .
+COPY . .
 
 # Constrói a aplicação para produção
 # O Vite automaticamente pega VITE_API_URL do ambiente durante o build
