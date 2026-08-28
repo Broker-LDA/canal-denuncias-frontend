@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
-import logoLDA from '../src/assets/logo-lda-etica.png';
+import { useEffect, useRef, useState } from 'react';
+import logoLDA from './assets/logo-lda-etica.png';
+import './styles.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://lda-canal-denuncia.eyg4rz.easypanel.host';
 
@@ -23,6 +24,20 @@ const dadosIniciaisFormulario = {
 
 function App() {
     const [abaAtiva, setAbaAtiva] = useState('novo-relato');
+    const painelRef = useRef(null);
+    const primeiraRenderizacao = useRef(true);
+
+    function navegarAbas(evento) {
+        const teclas = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+        if (!teclas.includes(evento.key)) return;
+        evento.preventDefault();
+        const proxima = evento.key === 'Home' ? 'novo-relato'
+            : evento.key === 'End' ? 'acompanhar'
+            : abaAtiva === 'novo-relato' ? 'acompanhar' : 'novo-relato';
+        setAbaAtiva(proxima);
+        painelRef.current?.querySelector(`#aba-${proxima}`)?.focus();
+    }
+
 
     const [formulario, setFormulario] = useState(
         dadosIniciaisFormulario
@@ -34,6 +49,18 @@ function App() {
     const [enviandoRelato, setEnviandoRelato] = useState(false);
     const [erroRelato, setErroRelato] = useState('');
     const [resultadoRelato, setResultadoRelato] = useState(null);
+
+    // Foco previsível ao alternar entre o formulário e a confirmação.
+    useEffect(() => {
+        if (primeiraRenderizacao.current) {
+            primeiraRenderizacao.current = false;
+            return;
+        }
+        const titulo = painelRef.current?.querySelector('[role="tabpanel"] h2');
+        titulo?.focus({ preventScroll: true });
+    }, [resultadoRelato]);
+
+
 
     const [protocoloConsulta, setProtocoloConsulta] = useState('');
     const [codigoAcessoConsulta, setCodigoAcessoConsulta] = useState('');
@@ -149,6 +176,8 @@ function App() {
     }
 
     function removerAnexo(indiceParaRemover) {
+        // Permite selecionar novamente o mesmo arquivo após removê-lo.
+        if (inputAnexosRef.current) inputAnexosRef.current.value = '';
         setAnexos((listaAtual) =>
             listaAtual.filter(
                 (_, indice) => indice !== indiceParaRemover
@@ -344,6 +373,7 @@ function App() {
 
     return (
         <div className="aplicacao">
+            <a className="pular-conteudo" href="#painel-canal">Pular para o formulário</a>
             <header className="cabecalho">
                 <div className="container cabecalho-conteudo">
                     <a className="marca" href="#inicio">
@@ -355,61 +385,45 @@ function App() {
                     </a>
 
                     <span className="selo-seguranca">
-                        Canal protegido
+                        <Icone nome="dialogo" /> Canal de escuta
                     </span>
                 </div>
             </header>
 
             <main id="inicio" className="container conteudo-principal">
-                <section className="hero">
-                    <span className="etiqueta">LDA - Laços, Diálogo e Atenção</span>
-
-                    <h1>
-                        Canal de Ética
-                        <br />e Denúncias
-                    </h1>
-
-                    <p>
-                        Este é um espaço seguro para você ser ouvido.
-                    </p>
-
-                    <p>
-                        O canal é gerido pelo setor de Gente & Gestão da LDA e está
-                        aberto para relatos realizados de boa-fé, com respeito,
-                        responsabilidade e sem retaliação.
-                    </p>
-
-                    <p className="hero-texto-menor">
-                        Sua voz ajuda a construir um ambiente mais ético, seguro,
-                        respeitoso e saudável para todos.
-                    </p>
+                <section className="hero" aria-labelledby="titulo-canal">
+                    <div className="hero-conteudo">
+                        <span className="etiqueta"><span /> LAÇOS, DIÁLOGO E ATENÇÃO</span>
+                        <h1 id="titulo-canal">Sua voz importa.<br /><em>Estamos aqui para ouvir.</em></h1>
+                        <p className="hero-subtitulo">Canal de Ética e Denúncias</p>
+                        <p>Um espaço para relatar situações e contribuir para um ambiente de trabalho mais ético, respeitoso e saudável.</p>
+                        <div className="hero-assinatura"><Icone nome="dialogo" /><span>Escuta com respeito.<br /><strong>Atenção a cada relato.</strong></span></div>
+                    </div>
+                    <aside className="orientacao" aria-label="Orientações do canal">
+                        <div className="orientacao-topo"><span className="icone-bloco"><Icone nome="escudo" /></span><span>ANTES DE COMEÇAR</span></div>
+                        <h2>Você escolhe como<br />quer ser ouvido.</h2>
+                        <p>Envie seu relato de forma anônima ou identificada, no seu tempo.</p>
+                        <ul>
+                            <li><Icone nome="check" /><span><strong>Descreva o que aconteceu</strong><small>Compartilhe os detalhes que puder.</small></span></li>
+                            <li><Icone nome="check" /><span><strong>Revise antes de enviar</strong><small>Tenha cuidado com dados em anexos.</small></span></li>
+                            <li><Icone nome="check" /><span><strong>Guarde seu protocolo</strong><small>No relato anônimo, guarde também o código.</small></span></li>
+                        </ul>
+                        <div className="orientacao-equipe">Canal gerido por <strong>Gente & Gestão · LDA</strong></div>
+                    </aside>
                 </section>
 
-                <section className="cartao painel-principal">
-                    <div
-                        className="abas"
-                        role="tablist"
-                        aria-label="Opções do canal de denúncias"
-                    >
-                        <button
-                            type="button"
-                            className={abaAtiva === 'novo-relato' ? 'aba ativa' : 'aba'}
-                            onClick={() => setAbaAtiva('novo-relato')}
-                        >
-                            Registrar relato
+                <section id="painel-canal" ref={painelRef} tabIndex={-1} className="cartao painel-principal" aria-label="Canal de relatos">
+                    <div className="abas" role="tablist" aria-label="Opções do canal de denúncias" onKeyDown={navegarAbas}>
+                        <button type="button" id="aba-novo-relato" role="tab" aria-selected={abaAtiva === 'novo-relato'} aria-controls="painel-novo-relato" tabIndex={abaAtiva === 'novo-relato' ? 0 : -1} className={abaAtiva === 'novo-relato' ? 'aba ativa' : 'aba'} onClick={() => setAbaAtiva('novo-relato')}>
+                            <Icone nome="editar" /><span>Registrar relato</span>
                         </button>
-
-                        <button
-                            type="button"
-                            className={abaAtiva === 'acompanhar' ? 'aba ativa' : 'aba'}
-                            onClick={() => setAbaAtiva('acompanhar')}
-                        >
-                            Acompanhar relato
+                        <button type="button" id="aba-acompanhar" role="tab" aria-selected={abaAtiva === 'acompanhar'} aria-controls="painel-acompanhar" tabIndex={abaAtiva === 'acompanhar' ? 0 : -1} className={abaAtiva === 'acompanhar' ? 'aba ativa' : 'aba'} onClick={() => setAbaAtiva('acompanhar')}>
+                            <Icone nome="buscar" /><span>Acompanhar relato</span>
                         </button>
                     </div>
 
                     {abaAtiva === 'novo-relato' && (
-                        <section className="area-formulario">
+                        <section className="area-formulario" id="painel-novo-relato" role="tabpanel" aria-labelledby="aba-novo-relato" tabIndex={0}>
                             {resultadoRelato ? (
                                 <ResultadoRelato
                                     resultado={resultadoRelato}
@@ -419,12 +433,13 @@ function App() {
                                     aoAcompanhar={irParaAcompanhamento}
                                 />
                             ) : (
-                                <form onSubmit={enviarRelato} encType="multipart/form-data">
+                                <form onSubmit={enviarRelato} encType="multipart/form-data" aria-busy={enviandoRelato}>
                                     <div className="titulo-secao">
-                                        <h2>Registrar um relato</h2>
+                                        <span className="sobretitulo">ESPAÇO DE ESCUTA</span>
+                                        <h2 tabIndex={-1}>Registrar um relato</h2>
                                         <p>
                                             Preencha as informações com o
-                                            máximo de detalhes possível.
+                                            máximo de detalhes possível. Campos com * são obrigatórios.
                                         </p>
                                     </div>
 
@@ -437,7 +452,7 @@ function App() {
                                     </div>
 
                                     <fieldset className="grupo-campos">
-                                        <legend>Como deseja enviar?</legend>
+                                        <legend><span className="numero-etapa" aria-hidden="true">01</span> Como deseja enviar?</legend>
 
                                         <div className="opcoes-tipo-envio">
                                             <label
@@ -511,8 +526,9 @@ function App() {
                                         </div>
                                     </fieldset>
 
+                                    <div className="cabecalho-etapa"><span className="numero-etapa" aria-hidden="true">02</span><h3>Conte o que aconteceu</h3></div>
                                     <div className="grade-campos">
-                                        <Campo label="Tipo de ocorrência" obrigatorio>
+                                        <Campo label="Tipo de ocorrência" obrigatorio classe="campo-largo">
                                             <select
                                                 name="categoria"
                                                 value={formulario.categoria}
@@ -556,7 +572,7 @@ function App() {
                                             </Campo>
                                         )}
 
-                                        <Campo label="Local do fato">
+                                        <Campo label="Local do fato" classe="campo-largo">
                                             <input
                                                 name="localFato"
                                                 value={formulario.localFato}
@@ -629,6 +645,7 @@ function App() {
                                         >
                                             <textarea
                                                 name="descricao"
+                                                aria-describedby="contador-descricao"
                                                 value={formulario.descricao}
                                                 onChange={atualizarFormulario}
                                                 minLength="20"
@@ -638,6 +655,8 @@ function App() {
                                                 required
                                             />
                                         </Campo>
+
+                                        <span className="contador contador-descricao campo-largo" id="contador-descricao">{formulario.descricao.length.toLocaleString('pt-BR')} / 5.000 caracteres</span>
 
                                         <Campo
                                             label="Como esta situação fez você se sentir? (opcional)"
@@ -653,19 +672,21 @@ function App() {
                                             />
                                         </Campo>
 
+                                        <div className="cabecalho-etapa campo-largo"><span className="numero-etapa" aria-hidden="true">03</span><h3>Evidências e revisão</h3><span className="opcional">Anexos opcionais</span></div>
                                         <Campo
                                             label="Anexar evidências (opcional)"
                                             classe="campo-largo"
                                         >
                                             <input
                                                 ref={inputAnexosRef}
+                                                aria-describedby="ajuda-anexos"
                                                 type="file"
                                                 accept=".jpg,.jpeg,.png,.webp,.pdf,.mp4,.webm"
                                                 multiple
                                                 onChange={selecionarAnexos}
                                             />
 
-                                            <small className="ajuda-campo">
+                                            <small className="ajuda-campo" id="ajuda-anexos">
                                                 Máximo de 3 arquivos, até 10 MB por arquivo e 20 MB no total.
                                                 Formatos aceitos: JPG, PNG, WEBP, PDF, MP4 e WEBM.
                                             </small>
@@ -683,7 +704,7 @@ function App() {
                                         </div>
 
                                         {anexos.length > 0 && (
-                                            <ul className="lista-anexos">
+                                            <ul className="lista-anexos campo-largo" aria-label="Arquivos selecionados">
                                                 {anexos.map((anexo, indice) => (
                                                     <li key={`${anexo.name}-${anexo.lastModified}`}>
                                                         <span>
@@ -695,6 +716,7 @@ function App() {
                                                             type="button"
                                                             className="botao-link-perigo"
                                                             onClick={() => removerAnexo(indice)}
+                                                            aria-label={`Remover ${anexo.name}`}
                                                         >
                                                             Remover
                                                         </button>
@@ -780,6 +802,7 @@ function App() {
 
                                                 <Campo label="Telefone">
                                                     <input
+                                                        type="tel"
                                                         name="telefone"
                                                         value={
                                                             formulario.telefone
@@ -801,29 +824,34 @@ function App() {
                                     )}
 
                                     {erroRelato && (
-                                        <p className="mensagem erro">
+                                        <p className="mensagem erro" role="alert">
                                             {erroRelato}
                                         </p>
                                     )}
 
+                                    <div className="rodape-formulario">
+                                    <p><Icone nome="escudo" /><span>Revise as informações antes de concluir.<br />Seu relato será analisado pela equipe responsável.</span></p>
                                     <button
                                         className="botao primario"
                                         type="submit"
                                         disabled={enviandoRelato}
                                     >
+                                        <Icone nome={enviandoRelato ? 'carregando' : 'enviar'} />
                                         {enviandoRelato
                                             ? 'Enviando relato...'
                                             : 'Registrar relato'}
                                     </button>
+                                    </div>
                                 </form>
                             )}
                         </section>
                     )}
 
                     {abaAtiva === 'acompanhar' && (
-                        <section className="area-formulario">
+                        <section className="area-formulario" id="painel-acompanhar" role="tabpanel" aria-labelledby="aba-acompanhar" tabIndex={0}>
                             <div className="titulo-secao">
-                                <h2>Acompanhar relato anônimo</h2>
+                                <span className="sobretitulo">CONTINUE A CONVERSA</span>
+                                <h2 tabIndex={-1}>Acompanhar relato anônimo</h2>
                                 <p>
                                     Informe o protocolo e o código secreto
                                     recebidos ao registrar o relato.
@@ -832,6 +860,7 @@ function App() {
 
                             <form
                                 className="formulario-acompanhamento"
+                                aria-busy={consultando}
                                 onSubmit={acompanharRelato}
                             >
                                 <Campo label="Protocolo" obrigatorio>
@@ -850,6 +879,9 @@ function App() {
 
                                 <Campo label="Código de acesso" obrigatorio>
                                     <input
+                                        type="password"
+                                        autoComplete="off"
+                                        spellCheck={false}
                                         value={codigoAcessoConsulta}
                                         onChange={(evento) =>
                                             setCodigoAcessoConsulta(
@@ -874,7 +906,7 @@ function App() {
                             </form>
 
                             {erroConsulta && (
-                                <p className="mensagem erro">
+                                <p className="mensagem erro" role="alert">
                                     {erroConsulta}
                                 </p>
                             )}
@@ -917,6 +949,20 @@ function App() {
     );
 }
 
+// SVGs locais: sem pacote de ícones, downloads ou rastreamento externo.
+function Icone({ nome }) {
+    const desenhos = {
+        dialogo: <><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" /><path d="M8 10h8M8 14h5" /></>,
+        escudo: <><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" /><path d="m9 12 2 2 4-4" /></>,
+        editar: <><path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7" /><path d="m16 3 5 5-10 10H6v-5L16 3Z" /></>,
+        buscar: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></>,
+        check: <path d="m5 12 4 4L19 6" />,
+        enviar: <><path d="m21 3-7 18-4-7-7-4L21 3ZM10 14 21 3" /></>,
+        carregando: <path d="M20 12a8 8 0 1 1-8-8" />,
+    };
+    return <svg className={`icone ${nome === 'carregando' ? 'girando' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{desenhos[nome]}</svg>;
+}
+
 function Campo({ label, obrigatorio = false, classe = '', children }) {
     return (
         <label className={`campo ${classe}`}>
@@ -939,7 +985,7 @@ function ResultadoRelato({ resultado, aoCriarOutro, aoAcompanhar }) {
                 ✓
             </span>
 
-            <h2>
+            <h2 tabIndex={-1}>
                 {ehAnonimo
                     ? 'Relato anônimo registrado com sucesso'
                     : 'Relato identificado registrado com sucesso'}
@@ -1155,9 +1201,11 @@ function DetalheAcompanhamento({
                     className="formulario-mensagem"
                     onSubmit={aoEnviarMensagem}
                 >
-                    <h3>Enviar informação complementar</h3>
+                    <h3 id="titulo-mensagem">Enviar informação complementar</h3>
 
                     <textarea
+                        aria-labelledby="titulo-mensagem"
+                        aria-describedby="contador-mensagem"
                         value={novaMensagem}
                         onChange={(evento) =>
                             aoAlterarMensagem(evento.target.value)
@@ -1169,7 +1217,7 @@ function DetalheAcompanhamento({
                     />
 
                     <div className="linha-acoes">
-                        <span className="contador">
+                        <span className="contador" id="contador-mensagem">
                             {novaMensagem.length}/5000
                         </span>
 
@@ -1185,11 +1233,11 @@ function DetalheAcompanhamento({
                     </div>
 
                     {erroMensagem && (
-                        <p className="mensagem erro">{erroMensagem}</p>
+                        <p className="mensagem erro" role="alert">{erroMensagem}</p>
                     )}
 
                     {sucessoMensagem && (
-                        <p className="mensagem sucesso">{sucessoMensagem}</p>
+                        <p className="mensagem sucesso" role="status">{sucessoMensagem}</p>
                     )}
                 </form>
             ) : (
