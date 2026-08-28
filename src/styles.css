@@ -2,7 +2,10 @@
 
 :root {
     font-family: 'DM Sans', Arial, sans-serif;
-    color: #1b2b35;
+    --cor-titulo: #1c3a5c;       /* era o verde escuro usado em h2, h3 e strong (#1d403b, #294742, #2c5650, #3d4f49) */
+    --cor-texto-secundario: #4a6a85; /* era o tom acinzentado-esverdeado dos parágrafos e labels (#6d7f7b, #596e69, #405b56) */
+    --cor-texto-muted: #647885;  /* era usado em legendas, datas e textos auxiliares (#60736f, #71817e) */
+    --cor-borda-destaque: #4f86c6; /* era o teal usado como borda de destaque no histórico (#83baaf) */
     background: #f5f8f7;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -941,7 +944,7 @@ button:disabled {
 
 .lista-vazia {
     padding: 25px;
-    color: #71817e;
+    color: var(--cor-texto-muted); /* antes: #71817e */
     text-align: center;
 }
 
@@ -959,13 +962,13 @@ button:disabled {
 
 .detalhe-interno-topo h2 {
     margin: 4px 0 0;
-    color: #1d403b;
+    color: var(--cor-titulo); /* antes: #1d403b */
     font-size: 1.4rem;
 }
 
 .detalhe-interno-topo p {
     margin: 6px 0 0;
-    color: #6d7f7b;
+    color: var(--cor-texto-secundario); /* antes: #6d7f7b */
 }
 
 .bloco-interno {
@@ -977,7 +980,7 @@ button:disabled {
 
 .bloco-titulo h3 {
     margin: 0;
-    color: #294742;
+    color: var(--cor-titulo); /* antes: #294742 */
     font-size: 1rem;
 }
 
@@ -1021,7 +1024,7 @@ button:disabled {
 }
 
 .grade-dados strong {
-    color: #3d4f49;
+    color: var(--cor-titulo); /* antes: #3d4f49 */
     font-size: 0.87rem;
     overflow-wrap: anywhere;
 }
@@ -1034,14 +1037,14 @@ button:disabled {
 }
 
 .alterar-status label {
-    color: #596e69;
+    color: var(--cor-texto-secundario); /* antes: #596e69 */
     font-size: 0.87rem;
     font-weight: 700;
 }
 
 .texto-relato {
     margin-top: 16px;
-    color: #405b56;
+    color: var(--cor-texto-secundario); /* antes: #405b56 */
     line-height: 1.6;
 }
 
@@ -1068,18 +1071,18 @@ button:disabled {
     grid-template-columns: 175px 1fr auto;
     align-items: center;
     gap: 12px;
-    border-left: 3px solid #83baaf;
+    border-left: 3px solid var(--cor-borda-destaque); /* antes: #83baaf */
     padding: 8px 0 8px 12px;
 }
 
 .historico strong {
-    color: #2c5650;
+    color: var(--cor-titulo); /* antes: #2c5650 */
     font-size: 0.78rem;
 }
 
 .historico span,
 .historico time {
-    color: #60736f;
+    color: var(--cor-texto-muted); /* antes: #60736f */
     font-size: 0.82rem;
 }
 
@@ -1127,7 +1130,7 @@ button:disabled {
 
 .hero-texto-menor {
     margin-top: 10px !important;
-    color: #60736f !important;
+    color: var(--cor-texto-muted) !important; /* antes: #60736f */
     font-size: 0.96rem !important;
 }
 

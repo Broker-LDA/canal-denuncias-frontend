@@ -906,8 +906,8 @@ function App() {
                     <strong>LDA - Laços, Diálogo e Atenção</strong>
 
                     <span>
-                        Em caso de emergência ou risco imediato, procure os serviços
-                        de emergência da sua região.
+                        Em caso de emergência ou risco imediato, procure o setor de
+                        Gente e Gestão o mais rápido possível.
                     </span>
 
                     <span className="rodape-copyright">
