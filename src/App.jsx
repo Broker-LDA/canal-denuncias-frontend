@@ -447,7 +447,7 @@ function App() {
                                         <strong>Privacidade em primeiro lugar</strong>
                                         <span>
                                             Em relatos anônimos, não solicitamos
-                                            nome, login ou dados da intranet.
+                                            nome, login ou dados pessoais.
                                         </span>
                                     </div>
 
