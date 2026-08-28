@@ -23,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
                 '/api/interno': {
                     target:
                         env.VITE_API_URL ||
-                        'https://lda-canal-denuncia.eyg4rz.easypanel.host/',
+                        'https://lda-canal-denuncia.eyg4rz.easypanel.host',
 
                     changeOrigin: true,
 
