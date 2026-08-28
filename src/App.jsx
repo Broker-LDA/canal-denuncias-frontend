@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import logoLDA from '../src/assets/logo-lda-etica.png';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://lda-canal-denuncia.eyg4rz.easypanel.host';
 
@@ -346,11 +347,7 @@ function App() {
             <header className="cabecalho">
                 <div className="container cabecalho-conteudo">
                     <a className="marca" href="#inicio">
-                        <img
-                            src="/assets/logo-lda-etica.jpg"
-                            alt="Logotipo da L.D.A (Laços, Diálogo e Atenção)"
-                            className="marca-logo"
-                        />
+                        <img src={logoLDA} alt="Logotipo da L.D.A (Laços, Diálogo e Atenção)" className="marca-logo"/>
                         <span>
                             <strong>LDA - Laços, Diálogo e Atenção</strong>
                             <small>Canal de Ética e Denúncia</small>
