@@ -1,25 +1,28 @@
-# Estágio de build: constrói a aplicação Vite
+# Estágio de build
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copia package.json e package-lock.json
+COPY frontend/package*.json ./
+
+# Instala as dependências
 RUN npm install
 
-COPY . .
+# Copia o restante do código do frontend
+COPY frontend/. .
+
+# Constrói a aplicação para produção
+# O Vite automaticamente pega VITE_API_URL do ambiente durante o build
 RUN npm run build
 
-# Estágio de produção: serve os arquivos estáticos com Nginx
+# Estágio de produção (servir arquivos estáticos com Nginx)
 FROM nginx:alpine
 
-# Copie os arquivos de build do estágio anterior para o Nginx
+# Copia os arquivos estáticos construídos do estágio anterior
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copie uma configuração customizada do Nginx (opcional, mas recomendado)
-# Crie um arquivo nginx.conf na pasta frontend/
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Exponha a porta 80 (padrão do Nginx)
+# Expõe a porta 80 (padrão para HTTP)
 EXPOSE 80
 
 # Comando para iniciar o Nginx
