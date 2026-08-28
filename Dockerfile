@@ -4,7 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copia package.json e package-lock.json
-COPY frontend/package*.json ./
+COPY package*.json ./
 
 # Instala as dependências
 RUN npm install
