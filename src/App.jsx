@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://lda_canal_denuncia_backend:80/';
 
 const dadosIniciaisFormulario = {
     tipoEnvio: 'ANONIMO',
