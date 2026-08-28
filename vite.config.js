@@ -23,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
                 '/api/interno': {
                     target:
                         env.VITE_API_URL ||
-                        'http://lda_canal_denuncia_backend:80/',
+                        'https://etica.ldalogistica.com.br/',
 
                     changeOrigin: true,
 
