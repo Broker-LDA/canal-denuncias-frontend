@@ -2,7 +2,7 @@
 
 :root {
     font-family: 'DM Sans', Arial, sans-serif;
-    --cor-titulo: #1c3a5c;       /* era o verde escuro usado em h2, h3 e strong (#1d403b, #294742, #2c5650, #3d4f49) */
+    --cor-titulo: #1f5491;       /* era o verde escuro usado em h2, h3 e strong (#1d403b, #294742, #2c5650, #3d4f49) */
     --cor-texto-secundario: #4a6a85; /* era o tom acinzentado-esverdeado dos parágrafos e labels (#6d7f7b, #596e69, #405b56) */
     --cor-texto-muted: #647885;  /* era usado em legendas, datas e textos auxiliares (#60736f, #71817e) */
     --cor-borda-destaque: #4f86c6; /* era o teal usado como borda de destaque no histórico (#83baaf) */
@@ -129,7 +129,7 @@ button:disabled {
 
 .hero h1 {
     margin: 0;
-    color: #173a37;
+    color: #2b84cc;
     font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(2.25rem, 6vw, 4.1rem);
     line-height: 1.08;
