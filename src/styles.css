@@ -21,8 +21,8 @@ body {
     min-height: 100vh;
     margin: 0;
     background:
-        radial-gradient(circle at 10% 5%, #dcefe8 0, transparent 28rem),
-        #f5f8f7;
+        radial-gradient(circle at 10% 5%, #0872d6 0, transparent 28rem),
+        #0e92cf;
 }
 
 button,
@@ -46,7 +46,7 @@ button:disabled {
 }
 
 .cabecalho {
-    border-bottom: 1px solid #dce5e2;
+    border-bottom: 1px solid #10d7f1;
     background: rgba(255, 255, 255, 0.86);
     backdrop-filter: blur(10px);
 }
@@ -63,20 +63,16 @@ button:disabled {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #183d3a;
+    color: #2a6abe;
     text-decoration: none;
 }
 
-.marca-icone {
-    display: grid;
-    width: 36px;
-    height: 36px;
-    place-items: center;
+.marca-logo {
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
-    color: white;
-    background: #19655c;
-    font-size: 23px;
-    font-weight: 700;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .marca strong,
@@ -85,7 +81,10 @@ button:disabled {
 }
 
 .marca strong {
-    font-size: 1rem;
+    display: block;
+    max-width: 220px;
+    font-size: 0.92rem;
+    line-height: 1.25;
 }
 
 .marca small {
@@ -688,8 +687,15 @@ button:disabled {
 
 .rodape .container {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.rodape-copyright {
+    color: #86948f;
+    font-size: 0.78rem;
 }
 
 .rodape strong {

@@ -346,16 +346,18 @@ function App() {
             <header className="cabecalho">
                 <div className="container cabecalho-conteudo">
                     <a className="marca" href="#inicio">
-                        <span className="marca-icone">!</span>
-
+                        <img
+                            src="/assets/logo-lda-etica.jpg"
+                            alt="Logotipo da L.D.A (Laços, Diálogo e Atenção)"
+                            className="marca-logo"
+                        />
                         <span>
-                            <strong>Canal de Denúncias</strong>
-                            <small>Ambiente seguro e confidencial</small>
+                            <strong>LDA - Laços, Diálogo e Atenção</strong>
+                            <small>Canal de Ética e Denúncia</small>
                         </span>
                     </a>
 
                     <span className="selo-seguranca">
-                        <span aria-hidden="true">🔒</span>
                         Canal protegido
                     </span>
                 </div>
@@ -363,7 +365,7 @@ function App() {
 
             <main id="inicio" className="container conteudo-principal">
                 <section className="hero">
-                    <span className="etiqueta">Canal Denúncia LDA</span>
+                    <span className="etiqueta">LDA - Laços, Diálogo e Atenção</span>
 
                     <h1>
                         Canal de Ética
@@ -371,14 +373,18 @@ function App() {
                     </h1>
 
                     <p>
-                        Este canal é gerido pelo setor de Gente e Gestão da LDA.
-                        Garantimos que não haverá retaliação contra pessoas que realizem
-                        relatos de boa-fé.
+                        Este é um espaço seguro para você ser ouvido.
+                    </p>
+
+                    <p>
+                        O canal é gerido pelo setor de Gente & Gestão da LDA e está
+                        aberto para relatos realizados de boa-fé, com respeito,
+                        responsabilidade e sem retaliação.
                     </p>
 
                     <p className="hero-texto-menor">
-                        Seu relato é um passo importante para construirmos um ambiente
-                        mais seguro, respeitoso e saudável.
+                        Sua voz ajuda a construir um ambiente mais ético, seguro,
+                        respeitoso e saudável para todos.
                     </p>
                 </section>
 
@@ -390,27 +396,17 @@ function App() {
                     >
                         <button
                             type="button"
-                            className={
-                                abaAtiva === 'novo-relato'
-                                    ? 'aba ativa'
-                                    : 'aba'
-                            }
+                            className={abaAtiva === 'novo-relato' ? 'aba ativa' : 'aba'}
                             onClick={() => setAbaAtiva('novo-relato')}
                         >
-                            <span aria-hidden="true">✎</span>
                             Registrar relato
                         </button>
 
                         <button
                             type="button"
-                            className={
-                                abaAtiva === 'acompanhar'
-                                    ? 'aba ativa'
-                                    : 'aba'
-                            }
+                            className={abaAtiva === 'acompanhar' ? 'aba ativa' : 'aba'}
                             onClick={() => setAbaAtiva('acompanhar')}
                         >
-                            <span aria-hidden="true">⌕</span>
                             Acompanhar relato
                         </button>
                     </div>
@@ -907,10 +903,16 @@ function App() {
 
             <footer className="rodape">
                 <div className="container">
-                    <strong>Canal de Denúncias</strong>
+                    <strong>LDA - Laços, Diálogo e Atenção</strong>
+
                     <span>
-                        Em caso de emergência ou risco imediato, procure os
-                        serviços de emergência da sua região.
+                        Em caso de emergência ou risco imediato, procure os serviços
+                        de emergência da sua região.
+                    </span>
+
+                    <span className="rodape-copyright">
+                        © 2026 Todos os Direitos Reservados | Desenvolvido por
+                        Tecnologia da Informação | LDA Logística
                     </span>
                 </div>
             </footer>
