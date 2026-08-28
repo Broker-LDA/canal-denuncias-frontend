@@ -401,7 +401,7 @@ function App() {
                     </div>
                     <aside className="orientacao" aria-label="Orientações do canal">
                         <div className="orientacao-topo"><span className="icone-bloco"><Icone nome="escudo" /></span><span>ANTES DE COMEÇAR</span></div>
-                        <h2>Você escolhe como<br />quer ser ouvido.</h2>
+                        <h2>Você escolhe como <br />quer ser ouvido.</h2>
                         <p>Envie seu relato de forma anônima ou identificada, no seu tempo.</p>
                         <ul>
                             <li><Icone nome="check" /><span><strong>Descreva o que aconteceu</strong><small>Compartilhe os detalhes que puder.</small></span></li>
