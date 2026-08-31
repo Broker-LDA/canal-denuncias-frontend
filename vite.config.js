@@ -8,6 +8,7 @@ export default defineConfig(({ command, mode }) => {
 
     const configuracao = {
         plugins: [react()],
+        base: './',
     };
 
     // Proxy exclusivo do servidor de desenvolvimento local.
