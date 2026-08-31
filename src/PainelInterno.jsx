@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 
+function obterToken() {
+    return localStorage.getItem('tokenIntranet');
+}
+
 const STATUS_PERMITIDOS = [
     'RECEBIDO',
     'EM_TRIAGEM',
@@ -77,9 +81,11 @@ function PainelInterno() {
                 ? `?status=${encodeURIComponent(status)}`
                 : '';
 
-            const resposta = await fetch(
-                `/api/interno/denuncias${query}`
-            );
+            const resposta = await fetch(`/api/intranet-denuncias${query}`, {
+                headers: {
+                    'Authorization': `Bearer ${obterToken()}`
+                }
+            });
 
             const dados = await lerResposta(resposta);
 
@@ -109,11 +115,11 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(
-                `/api/interno/denuncias/${encodeURIComponent(
-                    protocolo
-                )}`
-            );
+            const resposta = await fetch(`/api/intranet-denuncias${protocolo}`, {
+                headers: {
+                    'Authorization': `Bearer ${obterToken()}`
+                }
+            });
 
             const dados = await lerResposta(resposta);
 
@@ -161,23 +167,18 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(
-                `/api/interno/denuncias/${encodeURIComponent(
-                    detalhe.denuncia.protocolo
-                )}/status`,
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        status: novoStatus,
-                        detalhes: detalhesStatus,
-                        usuarioIntranetId:
-                            USUARIO_INTERNO_TESTE_ID,
-                    }),
-                }
-            );
+            const resposta = await fetch(`/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${obterToken()}`
+                },
+                body: JSON.stringify({
+                    status: novoStatus,
+                    detalhes: detalhesStatus
+                    // Remova o usuarioIntranetId daqui, o backend agora pega do Token!
+                }),
+            });
 
             const dados = await lerResposta(resposta);
 
@@ -214,23 +215,18 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(
-                `/api/interno/denuncias/${encodeURIComponent(
-                    detalhe.denuncia.protocolo
-                )}/mensagens`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        conteudo: mensagemLimpa,
-                        visivelDenunciante,
-                        usuarioIntranetId:
-                            USUARIO_INTERNO_TESTE_ID,
-                    }),
-                }
-            );
+            const resposta = await fetch(`/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${obterToken()}`
+                },
+                body: JSON.stringify({
+                    status: novoStatus,
+                    detalhes: detalhesStatus
+                    // Remova o usuarioIntranetId daqui, o backend agora pega do Token!
+                }),
+            });
 
             const dados = await lerResposta(resposta);
 
