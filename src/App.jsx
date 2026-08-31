@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import logoLDA from './assets/logo-lda-etica.png';
 import './styles.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://lda-canal-denuncia.eyg4rz.easypanel.host';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const dadosIniciaisFormulario = {
     tipoEnvio: 'ANONIMO',
