@@ -223,7 +223,7 @@ function PainelInterno() {
                 },
                 body: JSON.stringify({
                     status: mensagemLimpa,
-                    detalhes: visivelDenunciante
+                    detalhes: visivelDenunciante === true
                 }),
             });
 
