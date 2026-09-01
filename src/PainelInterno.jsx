@@ -222,8 +222,8 @@ function PainelInterno() {
                     'Authorization': `Bearer ${obterToken()}`
                 },
                 body: JSON.stringify({
-                    status: mensagemLimpa,
-                    detalhes: visivelDenunciante === true
+                    conteudo: mensagemLimpa,
+                    visivelDenunciante: visivelDenunciante === true
                 }),
             });
 
