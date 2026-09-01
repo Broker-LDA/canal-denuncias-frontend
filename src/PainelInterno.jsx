@@ -216,14 +216,14 @@ function PainelInterno() {
 
         try {
            const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
-                method: 'PATCH',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${obterToken()}`
                 },
                 body: JSON.stringify({
-                    status: novoStatus,
-                    detalhes: detalhesStatus
+                    status: mensagemLimpa,
+                    detalhes: visivelDenunciante
                 }),
             });
 
