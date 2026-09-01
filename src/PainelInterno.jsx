@@ -215,7 +215,7 @@ function PainelInterno() {
         setAviso('');
 
         try {
-           const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
+           const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/mensagens`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
