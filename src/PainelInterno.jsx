@@ -81,7 +81,7 @@ function PainelInterno() {
                 ? `?status=${encodeURIComponent(status)}`
                 : '';
 
-            const resposta = await fetch(`/api/intranet-denuncias${query}`, {
+           const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias${query}`, {
                 headers: {
                     'Authorization': `Bearer ${obterToken()}`
                 }
@@ -115,7 +115,8 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(`/api/intranet-denuncias${protocolo}`, {
+            // Adicionei a barra / antes do protocolo aqui também!
+            const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(protocolo)}`, {
                 headers: {
                     'Authorization': `Bearer ${obterToken()}`
                 }
@@ -167,7 +168,7 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(`/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
+            const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -176,7 +177,6 @@ function PainelInterno() {
                 body: JSON.stringify({
                     status: novoStatus,
                     detalhes: detalhesStatus
-                    // Remova o usuarioIntranetId daqui, o backend agora pega do Token!
                 }),
             });
 
@@ -215,7 +215,7 @@ function PainelInterno() {
         setAviso('');
 
         try {
-            const resposta = await fetch(`/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
+           const resposta = await fetch(`https://lda_intranet_backend.eyg4rz.easypanel.host/api/intranet-denuncias/${encodeURIComponent(detalhe.denuncia.protocolo)}/status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -224,7 +224,6 @@ function PainelInterno() {
                 body: JSON.stringify({
                     status: novoStatus,
                     detalhes: detalhesStatus
-                    // Remova o usuarioIntranetId daqui, o backend agora pega do Token!
                 }),
             });
 
